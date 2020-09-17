@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>code5</title>
+		
+	</head>
+	<body>
+		<input id="queue-input" type="text">
+		<p id="queue-cont">队列内容：apple-&gt;pear</p>    
+		<button id="in-btn">入队</button>
+		<button id="out-btn">出队</button>
+		<button id="font-btn">打印队头元素内容</button>
+		<button id="empty-btn">判断队列是否为空</button>
+		<script>
+					//深拷贝
+			function DeepCopy(obj) {
+			if (!obj && typeof obj !== 'object') {
+				throw new Error('Error Arguments')
+			}
+
+			const targetObj = Array.isArray(obj)? [] : {}
+				for (let key in obj) {
+					if (obj.hasOwnProperty(key)) {
+					if (obj[key] && typeof obj[key] === 'object') {
+						targetObj[key] = DeepCopy(obj[key]);
+					}
+					else {
+						targetObj[key] = obj[key]
+					}
+				}
+			}
+			return targetObj
+		}
+			
+			let queue = ["apple", "pear"]
+			let qin = document.getElementById('queue-input')
+			let btn = document.getElementsByTagName('button')
+			let qout = document.getElementById('queue-cont')
+
+			btn[0].onclick = function() {
+				queue.push(qin.value)
+				if (queue.length!=0) {
+					let tmpqueue = DeepCopy(queue)
+					let str = "队列：" + tmpqueue.shift()
+					while(tmpqueue.length != 0) {
+						str += "-&gt;" + tmpqueue.shift()
+					}
+					qout.innerHTML = str
+				}
+				else {
+					qout.innerHTML = '队列为空'
+				}
+				console.log('入队 ' + qin.value)
+			}
+			btn[1].onclick = function() {
+				let tmp = queue.shift()
+				if (queue.length!=0) {
+					let tmpqueue = DeepCopy(queue)
+					let str = "队列：" + tmpqueue.shift()
+					while(tmpqueue.length != 0) {
+						str += "-&gt;" + tmpqueue.shift()
+					}
+					qout.innerHTML = str
+				}
+				else {
+					qout.innerHTML = '队列为空'
+				}
+				console.log('出队 ' + tmp)
+			}
+			btn[2].onclick = function() {
+				if (queue.length!=0) {
+					let tmpqueue = DeepCopy(queue)
+					let str = "队列：" + tmpqueue.shift()
+					while(tmpqueue.length != 0) {
+						str += "-&gt;" + tmpqueue.shift()
+					}
+					qout.innerHTML = str
+				}
+				else {
+					qout.innerHTML = '队列为空'
+				}
+				
+			}
+			btn[3].onclick = function() {
+				if (queue.length == 0)
+					qout.innerHTML = '队列为空'
+				else
+					qout.innerHTML = '队列非空'
+			}
+		</script>
+	</body>
+</html>
